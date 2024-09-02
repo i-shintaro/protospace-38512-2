@@ -1,7 +1,6 @@
 class PrototypesController < ApplicationController
-
+  before_action :set_prototype, only: [:show, :edit, :update]
   def index
-
     @prototypes = Prototype.includes(:user)
   end
 
@@ -16,6 +15,30 @@ class PrototypesController < ApplicationController
     else
     render :new, status: :unprocessable_entity
     end
+  end
+
+  def show
+  end
+
+  def edit
+  end
+
+  def destroy
+    prototype = Prototype.find(params[:id])
+    prototype.destroy
+    redirect_to root_path
+  end
+
+  def update
+    if @prototype.update(prototype_params)
+      redirect_to root_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
   end
 
   private
